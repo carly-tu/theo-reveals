@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Theo Collaborator — Reveals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --text:#111111;
+    --muted:#6E7676;
+    --accent:#E8EEEE;
+    --accent-line:#D3DFDF;
+    --highlight:#ED582A;
+    --highlight-tint:#FDECE6;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  .wrap{max-width:920px; margin:0 auto; padding:0 24px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:88px 0 60px;
+    border-bottom:1px solid var(--accent-line);
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--muted);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:28px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:7px;height:7px;border-radius:50%;
+    background:var(--highlight);
+  }
+  .headline{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:clamp(38px, 5.6vw, 58px);
+    line-height:1.1;
+    letter-spacing:-0.01em;
+    margin:0 0 22px;
+    color:var(--text);
+    max-width:16ch;
+  }
+  .headline em{
+    font-style:normal;
+    color:var(--highlight);
+  }
+  .sub{
+    font-size:17px;
+    color:var(--muted);
+    max-width:56ch;
+    margin:0 0 40px;
+  }
+  /* ---------- SECTION LABEL ---------- */
+  .section-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin:60px 0 8px;
+  }
+  .section-title{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:28px;
+    color:var(--text);
+    margin:0 0 36px;
+    letter-spacing:-0.01em;
+  }
+
+  /* ---------- CARDS ---------- */
+  .cards{ padding-bottom:40px; }
+  .card{
+    background:var(--bg);
+    border:1px solid var(--accent-line);
+    border-radius:10px;
+    padding:28px 28px 24px;
+    margin-bottom:20px;
+    position:relative;
+  }
+  .card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:16px;
+    margin-bottom:18px;
+  }
+  .problem-box{
+    background:#F3F3F3;
+    border-radius:8px;
+    padding:18px 20px;
+    margin-bottom:20px;
+  }
+  .problem-box .card-top{ margin-bottom:14px; }
+  .problem-tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:var(--muted);
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+  }
+  .problem-title{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:19px;
+    font-weight:600;
+    color:var(--text);
+    margin:5px 0 0;
+    letter-spacing:-0.005em;
+  }
+  .problem-statement{
+    font-size:15.5px;
+    line-height:1.65;
+    color:var(--text);
+    margin:0;
+    max-width:64ch;
+  }
+
+  .compare{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  @media (max-width:640px){
+    .compare{ grid-template-columns:1fr; }
+  }
+  .answer-col{
+    border-radius:8px;
+    padding:16px 18px;
+  }
+  .answer-col.generic{
+    background:var(--bg);
+    border:1px solid var(--accent-line);
+  }
+  .answer-col.theo{
+    background:var(--bg);
+    border:1px solid var(--accent-line);
+    border-left:3px solid var(--highlight);
+    position:relative;
+    overflow:hidden;
+  }
+  .answer-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .answer-label.generic{ color:var(--muted); }
+  .answer-label.theo{ color:var(--highlight); font-weight:600; }
+  .answer-label.theo::before{
+    content:"";
+    width:6px;height:6px;border-radius:50%;
+    background:var(--highlight);
+  }
+  .answer-text{
+    font-size:14.5px;
+    line-height:1.6;
+  }
+  .answer-col.generic .answer-text{ color:var(--muted); }
+  .answer-col.theo .answer-text{
+    color:var(--text);
+    position:relative;
+    z-index:1;
+  }
+  /* left-edge draws in on reveal, the signature "catch" moment */
+  .answer-col.theo::before{
+    content:"";
+    position:absolute;
+    left:0; top:0;
+    width:3px; height:0%;
+    background:var(--highlight);
+  }
+  .card.revealed .answer-col.theo::before{
+    animation:drawEdge 0.5s ease-out 0.05s forwards;
+  }
+  @keyframes drawEdge{ to{ height:100%; } }
+  .capability-tag{
+    display:inline-block;
+    margin-top:14px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.03em;
+    color:#fff;
+    background:var(--highlight);
+    padding:4px 11px;
+    border-radius:20px;
+    position:relative;
+    z-index:1;
+    opacity:0;
+  }
+  .card.revealed .capability-tag{
+    animation:tagIn 0.35s ease-out 0.3s forwards;
+  }
+  @keyframes tagIn{
+    from{ opacity:0; transform:translateY(4px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  .reveal-btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.03em;
+    color:var(--text);
+    background:var(--accent);
+    border:1px solid var(--accent-line);
+    padding:10px 18px;
+    border-radius:6px;
+    cursor:pointer;
+    text-transform:uppercase;
+  }
+  .reveal-btn:hover{ background:var(--accent-line); }
+  .reveal-btn:focus-visible{ outline:2px solid var(--highlight); outline-offset:2px; }
+  .card.revealed .reveal-btn{ display:none; }
+
+  .reveal-panel{ display:none; margin-top:4px; }
+  .card.revealed .reveal-panel{ display:block; }
+
+  /* ---------- CTA ---------- */
+  .cta{
+    margin:56px 0 80px;
+    padding:36px 32px;
+    border:1px solid var(--accent-line);
+    border-radius:10px;
+    text-align:center;
+    background:var(--accent);
+  }
+  .cta h3{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:26px;
+    font-weight:600;
+    margin:0 0 10px;
+    letter-spacing:-0.01em;
+  }
+  .cta p{
+    color:var(--muted);
+    font-size:15px;
+    margin:0 0 22px;
+  }
+  .cta-btn{
+    display:inline-block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    letter-spacing:0.03em;
+    text-transform:uppercase;
+    color:#fff;
+    background:var(--highlight);
+    padding:13px 26px;
+    border-radius:6px;
+    text-decoration:none;
+    font-weight:600;
+  }
+  .cta-btn:hover{ filter:brightness(0.92); }
+
+  footer{
+    padding:26px 0 50px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+    border-top:1px solid var(--accent-line);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  @media (max-width:560px){
+    .hero{padding:56px 0 44px;}
+    .card{padding:22px 18px 18px;}
+    .card-top{flex-direction:column;}
+    footer{flex-direction:column;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .card.revealed .answer-col.theo::before{ animation:none; height:100%; }
+    .card.revealed .capability-tag{ animation:none; opacity:1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="eyebrow">FirstPrinciples · Theo Collaborator</div>
+    <h1 class="headline">Same open problem. <em>Different</em> answer.</h1>
+    <p class="sub">Most AI assistants will confidently agree with you. Theo Collaborator was built to find the gap first. Read the open problem, then reveal how Theo's response stood apart.</p>
+  </div>
+
+  <div class="section-label">Live from the board</div>
+  <div class="section-title">Four open problems, two kinds of answers</div>
+
+  <div class="cards">
+
+    <div class="card">
+      <div class="problem-box">
+        <div class="card-top">
+          <div>
+            <div class="problem-tag">Lattice QCD · surrogate sampling</div>
+            <p class="problem-title">Symmetry-preserving surrogate for lattice QCD configuration sampling</p>
+          </div>
+        </div>
+        <p class="problem-statement">Will a symmetry-preserving surrogate sampler generalize across lattice volumes without re-validation?</p>
+      </div>
+      <button class="reveal-btn" data-target="r1">Reveal Theo's response</button>
+      <div class="reveal-panel" id="r1">
+        <div class="compare">
+          <div class="answer-col generic">
+            <div class="answer-label generic">A typical answer</div>
+            <p class="answer-text">Yes — symmetry-preserving architectures generally generalize well across scales because equivariance is built into the model.</p>
+          </div>
+          <div class="answer-col theo">
+            <div class="answer-label theo">Theo Collaborator</div>
+            <p class="answer-text">Equivariance doesn't guarantee sampling efficiency at scale. Acceptance rate at the target lattice volume is untested in this proposal — recommend an ablation there before allocating compute.</p>
+            <span class="capability-tag">Caught an untested metric</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="problem-box">
+        <div class="card-top">
+          <div>
+            <div class="problem-tag">Time-domain astronomy · foundation models</div>
+            <p class="problem-title">Foundation model for classifying astronomical transients</p>
+          </div>
+        </div>
+        <p class="problem-statement">Can a foundation model pretrained on survey data transfer cleanly to a new deployment survey?</p>
+      </div>
+      <button class="reveal-btn" data-target="r2">Reveal Theo's response</button>
+      <div class="reveal-panel" id="r2">
+        <div class="compare">
+          <div class="answer-col generic">
+            <div class="answer-label generic">A typical answer</div>
+            <p class="answer-text">Yes — foundation models transfer well across datasets given sufficiently diverse pretraining.</p>
+          </div>
+          <div class="answer-col theo">
+            <div class="answer-label theo">Theo Collaborator</div>
+            <p class="answer-text">Pretraining cadence (nightly) doesn't match the deployment survey's cadence (sub-hourly). Fast transients may be systematically under-detected — recommend cadence-matched fine-tuning data first.</p>
+            <span class="capability-tag">Caught a cadence mismatch</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="problem-box">
+        <div class="card-top">
+          <div>
+            <div class="problem-tag">Gravitational waves · simulation-based inference</div>
+            <p class="problem-title">SBI for compact binary parameter estimation</p>
+          </div>
+        </div>
+        <p class="problem-statement">Is the simulator's noise model trustworthy across the full frequency band used for inference?</p>
+      </div>
+      <button class="reveal-btn" data-target="r3">Reveal Theo's response</button>
+      <div class="reveal-panel" id="r3">
+        <div class="compare">
+          <div class="answer-col generic">
+            <div class="answer-label generic">A typical answer</div>
+            <p class="answer-text">Simulation-based inference is robust as long as the simulator captures the main detector physics.</p>
+          </div>
+          <div class="answer-col theo">
+            <div class="answer-label theo">Theo Collaborator</div>
+            <p class="answer-text">Noise model is unvalidated below 20 Hz — exactly where non-Gaussian detector artifacts dominate. Posteriors in that band shouldn't be trusted until it's addressed.</p>
+            <span class="capability-tag">Caught an unvalidated regime</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="problem-box">
+        <div class="card-top">
+          <div>
+            <div class="problem-tag">Jet tagging · equivariant architectures</div>
+            <p class="problem-title">Equivariant network for jet tagging at the LHC</p>
+          </div>
+        </div>
+        <p class="problem-statement">Is rotational equivariance enough for a jet-tagging architecture?</p>
+      </div>
+      <button class="reveal-btn" data-target="r4">Reveal Theo's response</button>
+      <div class="reveal-panel" id="r4">
+        <div class="compare">
+          <div class="answer-col generic">
+            <div class="answer-label generic">A typical answer</div>
+            <p class="answer-text">Rotational equivariance is a strong inductive bias and should improve tagging performance.</p>
+          </div>
+          <div class="answer-col theo">
+            <div class="answer-label theo">Theo Collaborator</div>
+            <p class="answer-text">Permutation equivariance over jet constituents is unaddressed. Results may depend on arbitrary constituent ordering, which would undermine the reported performance gains.</p>
+            <span class="capability-tag">Caught a missing symmetry</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta">
+    <h3>Want Theo to read your draft before your reviewers do?</h3>
+    <p>Theo Collaborator is in early beta. Join the waitlist for access.</p>
+    <a href="#" class="cta-btn">Join the beta waitlist</a>
+  </div>
+
+  <footer>
+    <span>FirstPrinciples · Theo Collaborator</span>
+    <span>Currently in early beta — results shown are illustrative</span>
+  </footer>
+
+</div>
+
+<script>
+  document.querySelectorAll('.reveal-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const card = btn.closest('.card');
+      card.classList.add('revealed');
+    });
+  });
+</script>
+
+</body>
+</html>
