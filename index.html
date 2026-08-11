@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Theo Collaborator — Reveals</title>
+<title>Theo Collaborator — Council Mode</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -26,7 +26,7 @@
     -webkit-font-smoothing:antialiased;
   }
   a{color:inherit;}
-  .wrap{max-width:920px; margin:0 auto; padding:0 24px;}
+  .wrap{max-width:960px; margin:0 auto; padding:0 24px;}
 
   /* ---------- HERO ---------- */
   .hero{
@@ -57,7 +57,7 @@
     letter-spacing:-0.01em;
     margin:0 0 22px;
     color:var(--text);
-    max-width:16ch;
+    max-width:18ch;
   }
   .headline em{
     font-style:normal;
@@ -66,7 +66,7 @@
   .sub{
     font-size:17px;
     color:var(--muted);
-    max-width:56ch;
+    max-width:58ch;
     margin:0 0 40px;
   }
   /* ---------- SECTION LABEL ---------- */
@@ -83,7 +83,7 @@
     font-weight:600;
     font-size:28px;
     color:var(--text);
-    margin:0 0 36px;
+    margin:60px 0 36px;
     letter-spacing:-0.01em;
   }
 
@@ -131,33 +131,26 @@
     line-height:1.65;
     color:var(--text);
     margin:0;
-    max-width:64ch;
+    max-width:66ch;
   }
 
-  .compare{
+  /* ---------- COUNCIL GRID (3 model columns) ---------- */
+  .council-grid{
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:1fr 1fr 1fr;
     gap:14px;
+    margin-bottom:16px;
   }
-  @media (max-width:640px){
-    .compare{ grid-template-columns:1fr; }
+  @media (max-width:760px){
+    .council-grid{ grid-template-columns:1fr; }
   }
-  .answer-col{
+  .model-col{
     border-radius:8px;
     padding:16px 18px;
-  }
-  .answer-col.generic{
     background:var(--bg);
     border:1px solid var(--accent-line);
   }
-  .answer-col.theo{
-    background:var(--bg);
-    border:1px solid var(--accent-line);
-    border-left:3px solid var(--highlight);
-    position:relative;
-    overflow:hidden;
-  }
-  .answer-label{
+  .model-label{
     font-family:'IBM Plex Mono', monospace;
     font-size:11px;
     letter-spacing:0.08em;
@@ -166,33 +159,63 @@
     display:flex;
     align-items:center;
     gap:8px;
+    color:var(--muted);
+    font-weight:600;
   }
-  .answer-label.generic{ color:var(--muted); }
-  .answer-label.theo{ color:var(--highlight); font-weight:600; }
-  .answer-label.theo::before{
+  .model-label::before{
+    content:"";
+    width:6px;height:6px;border-radius:50%;
+    background:var(--muted);
+  }
+  .model-text{
+    font-size:14.5px;
+    line-height:1.6;
+    color:var(--text);
+  }
+
+  /* ---------- SYNTHESIS (Theo's value-add) ---------- */
+  .synthesis{
+    border-radius:8px;
+    padding:20px 22px;
+    background:var(--bg);
+    border:1px solid var(--accent-line);
+    border-left:3px solid var(--highlight);
+    position:relative;
+    overflow:hidden;
+  }
+  .synthesis-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:var(--highlight);
+    font-weight:600;
+  }
+  .synthesis-label::before{
     content:"";
     width:6px;height:6px;border-radius:50%;
     background:var(--highlight);
   }
-  .answer-text{
+  .synthesis-text{
     font-size:14.5px;
-    line-height:1.6;
-  }
-  .answer-col.generic .answer-text{ color:var(--muted); }
-  .answer-col.theo .answer-text{
+    line-height:1.65;
     color:var(--text);
     position:relative;
     z-index:1;
   }
   /* left-edge draws in on reveal, the signature "catch" moment */
-  .answer-col.theo::before{
+  .synthesis::before{
     content:"";
     position:absolute;
     left:0; top:0;
     width:3px; height:0%;
     background:var(--highlight);
   }
-  .card.revealed .answer-col.theo::before{
+  .card.revealed .synthesis::before{
     animation:drawEdge 0.5s ease-out 0.05s forwards;
   }
   @keyframes drawEdge{ to{ height:100%; } }
@@ -293,7 +316,7 @@
   }
 
   @media (prefers-reduced-motion: reduce){
-    .card.revealed .answer-col.theo::before{ animation:none; height:100%; }
+    .card.revealed .synthesis::before{ animation:none; height:100%; }
     .card.revealed .capability-tag{ animation:none; opacity:1; }
   }
 </style>
@@ -303,116 +326,113 @@
 <div class="wrap">
 
   <div class="hero">
-    <div class="eyebrow">FirstPrinciples · Theo Collaborator</div>
-    <h1 class="headline">Same open problem. <em>Different</em> answer.</h1>
-    <p class="sub">Most AI assistants will confidently agree with you. Theo Collaborator was built to find the gap first. Read the open problem, then reveal how Theo's response stood apart.</p>
+    <div class="eyebrow">FirstPrinciples · Theo Collaborator — Council Mode</div>
+    <h1 class="headline">One problem, <em>3</em> models.</h1>
+    <p class="sub">Council mode runs on FirstPrinciples' domain-specialized fine-tuned models (GLM, Kimi) and GPT against the same research question, synthesizes where they agree, and where the disagreement is the real signal.</p>
   </div>
 
-  <div class="section-label">Live from the board</div>
-  <div class="section-title">Four open problems, two kinds of answers</div>
+  <div class="section-title">Three problems, one Council Mode</div>
 
   <div class="cards">
 
+    <!-- 2: Neural operators / turbulence -->
     <div class="card">
       <div class="problem-box">
         <div class="card-top">
           <div>
-            <div class="problem-tag">Lattice QCD · surrogate sampling</div>
-            <p class="problem-title">Symmetry-preserving surrogate for lattice QCD configuration sampling</p>
+            <div class="problem-tag">Neural operators / turbulence</div>
           </div>
         </div>
-        <p class="problem-statement">Will a symmetry-preserving surrogate sampler generalize across lattice volumes without re-validation?</p>
+        <p class="problem-statement">A neural operator trained on 128³ turbulent simulations produces convincing 512³ flow fields zero-shot. Has it learned resolution-independent fluid dynamics, or could this be misleading? How would you tell?</p>
       </div>
-      <button class="reveal-btn" data-target="r1">Reveal Theo's response</button>
+      <button class="reveal-btn" data-target="r1">Reveal Council Mode</button>
       <div class="reveal-panel" id="r1">
-        <div class="compare">
-          <div class="answer-col generic">
-            <div class="answer-label generic">A typical answer</div>
-            <p class="answer-text">Yes — symmetry-preserving architectures generally generalize well across scales because equivariance is built into the model.</p>
+        <div class="council-grid">
+          <div class="model-col">
+            <div class="model-label">GLM</div>
+            <p class="model-text">GLM led with the energy spectrum E(k) across the full resolved range as the single most diagnostic check, distinguishing smoothing from hallucination by looking at power past the training cutoff. It uniquely emphasized comparison against simple baselines (bicubic interpolation, spectral zero-padding, standard LES closures) to verify the neural operator is actually outperforming trivial upscaling. It also alone raised the Reynolds-number problem: resolving smaller scales implies a higher effective Re, so the model must produce statistics consistent with that changed physics, not just the training Re.</p>
           </div>
-          <div class="answer-col theo">
-            <div class="answer-label theo">Theo Collaborator</div>
-            <p class="answer-text">Equivariance doesn't guarantee sampling efficiency at scale. Acceptance rate at the target lattice volume is untested in this proposal — recommend an ablation there before allocating compute.</p>
-            <span class="capability-tag">Caught an untested metric</span>
+          <div class="model-col">
+            <div class="model-label">Kimi</div>
+            <p class="model-text">Kimi led with dynamical fidelity over integration time, arguing that the strongest test is a multi-step rollout: if the model has learned dynamics, the cascade and spectrum should remain stable over many eddy-turnover times, whereas a statistical prior will drift or decorrelate. It uniquely proposed a downsampling consistency test (the 512³ output should commute with spatial averaging to recover the 128³ input) and generalization across physical regimes (different Re, forcing, boundary conditions). It also offered a specific alternative hypothesis: the model may have learned a resolution-independent approximate inverse of the Kolmogorov cascade rather than the Navier-Stokes operator itself.</p>
           </div>
+          <div class="model-col">
+            <div class="model-label">GPT</div>
+            <p class="model-text">GPT led with physics invariants and budgets (divergence-free error, energy/dissipation balance, enstrophy/helicity) as the strongest signal, then moved to multi-resolution statistical equivalence. It uniquely suggested Fourier-space error decomposition (to see whether errors explode in specific wavenumber bands), conservation under perturbations (testing whether small input changes yield physically consistent responses), intermediate-resolution stress tests, and training-resolution ablations (comparing models trained only on 64³, only on 128³, or on mixtures) to judge whether the zero-shot success is robust or brittle.</p>
+          </div>
+        </div>
+        <div class="synthesis">
+          <div class="synthesis-label">Council Synthesis</div>
+          <p class="synthesis-text">All three models agreed on the fundamental verdict: convincing-looking 512³ fields are not sufficient proof of learned physics. They all noted that neural operators are discretization-invariant by construction, so generating higher-resolution output is architecturally trivial; the real question is whether the small-scale physics beyond the training Nyquist frequency is correct. All three warned that turbulence is particularly deceptive because plausible-looking structure can hide spectral and statistical errors, and all three converged on checking energy spectra, physical invariants/conservation laws, and higher-order statistics/intermittency (structure functions, velocity-gradient PDFs) rather than trusting visual plausibility.</p>
+          <p class="synthesis-text">In short, the Council agreed the burden of proof lies on statistical and dynamical validation, not appearance, but offered complementary angles: GLM on spectral fidelity and baseline comparison, Kimi on temporal stability and downsampling commutativity, and GPT on invariant preservation, Fourier error structure, and training ablations. A complete validation would ideally combine all three angles.</p>
         </div>
       </div>
     </div>
 
+    <!-- 4: Scientific foundation models -->
     <div class="card">
       <div class="problem-box">
         <div class="card-top">
           <div>
-            <div class="problem-tag">Time-domain astronomy · foundation models</div>
-            <p class="problem-title">Foundation model for classifying astronomical transients</p>
+            <div class="problem-tag">Scientific foundation models</div>
           </div>
         </div>
-        <p class="problem-statement">Can a foundation model pretrained on survey data transfer cleanly to a new deployment survey?</p>
+        <p class="problem-statement">A physics foundation model trained only on simulations accurately predicts a laboratory experiment it never saw. Is that evidence it learned transferable physical principles? What alternative explanation would worry you most?</p>
       </div>
-      <button class="reveal-btn" data-target="r2">Reveal Theo's response</button>
+      <button class="reveal-btn" data-target="r2">Reveal Council Mode</button>
       <div class="reveal-panel" id="r2">
-        <div class="compare">
-          <div class="answer-col generic">
-            <div class="answer-label generic">A typical answer</div>
-            <p class="answer-text">Yes — foundation models transfer well across datasets given sufficiently diverse pretraining.</p>
+        <div class="council-grid">
+          <div class="model-col">
+            <div class="model-label">GLM</div>
+            <p class="model-text">GLM uniquely cast the risk as learning a shared low-order effective theory between simulator and experiment, noting this is harder to detect than overfitting because the model is not wrong within the regime. It alone proposed checking whether the model's errors correlate with the simulator's errors, probing symmetry invariances that the simulator may not enforce, and testing transfer across simulator families (e.g., hydrodynamic to kinetic).</p>
           </div>
-          <div class="answer-col theo">
-            <div class="answer-label theo">Theo Collaborator</div>
-            <p class="answer-text">Pretraining cadence (nightly) doesn't match the deployment survey's cadence (sub-hourly). Fast transients may be systematically under-detected — recommend cadence-matched fine-tuning data first.</p>
-            <span class="capability-tag">Caught a cadence mismatch</span>
+          <div class="model-col">
+            <div class="model-label">Kimi</div>
+            <p class="model-text">Kimi framed the danger as memorizing the simulation manifold and uniquely emphasized the nature of the observable: matching bulk, low-dimensional quantities is weak evidence compared to predicting detailed local fields or transient dynamics. It alone raised causal mechanism identification (counterfactual reasoning) and generalization across distinct experimental platforms as critical filters.</p>
           </div>
+          <div class="model-col">
+            <div class="model-label">GPT</div>
+            <p class="model-text">GPT focused on shared inductive biases or hidden overlap (e.g., leaky calibration, similar boundary conditions) and uniquely suggested systematic ablation of physics knobs (removing a constitutive term to see if accuracy collapses), realism-relevant uncertainty calibration on lab data, and counterfactual experiment prediction (changing a physical lever arm while keeping detector details similar).</p>
+          </div>
+        </div>
+        <div class="synthesis">
+          <div class="synthesis-label">Council Synthesis</div>
+          <p class="synthesis-text">All three models agreed that a single accurate prediction is suggestive but not decisive. They all identified the same core danger: the model has likely learned the simulator's effective theory or inductive biases rather than transferable underlying physics, with the experiment happening to fall inside the simulator's validity envelope. All three converged on stress-testing the model outside that envelope (failure regimes, perturbed conditions, different experimental setups) as the way to tell.</p>
+          <p class="synthesis-text">In short, the Council was unanimous on the caution but offered complementary stress tests: GLM on cross-simulator and symmetry diagnostics, Kimi on causality and observable granularity, and GPT on ablation and calibration.</p>
         </div>
       </div>
     </div>
 
+    <!-- 5: Gravitational waves -->
     <div class="card">
       <div class="problem-box">
         <div class="card-top">
           <div>
-            <div class="problem-tag">Gravitational waves · simulation-based inference</div>
-            <p class="problem-title">SBI for compact binary parameter estimation</p>
+            <div class="problem-tag">Gravitational waves</div>
           </div>
         </div>
-        <p class="problem-statement">Is the simulator's noise model trustworthy across the full frequency band used for inference?</p>
+        <p class="problem-statement">After subtracting the best-fit binary-black-hole waveform, a weak residual appears coherently in two detectors and tracks the orbital frequency. New physics, missing waveform physics, or noise? What test would you run next?</p>
       </div>
-      <button class="reveal-btn" data-target="r3">Reveal Theo's response</button>
+      <button class="reveal-btn" data-target="r3">Reveal Council Mode</button>
       <div class="reveal-panel" id="r3">
-        <div class="compare">
-          <div class="answer-col generic">
-            <div class="answer-label generic">A typical answer</div>
-            <p class="answer-text">Simulation-based inference is robust as long as the simulator captures the main detector physics.</p>
+        <div class="council-grid">
+          <div class="model-col">
+            <div class="model-label">GLM</div>
+            <p class="model-text">GLM confidently ranked missing waveform physics as the single most probable explanation and argued for re-subtraction with a higher-fidelity waveform model (e.g., IMRPhenomD → IMRPhenomXPHM/SEOBNRv4PHM with higher modes and precession) as the first and highest-priority test, because it is cheap, directly targets the most likely cause, and has a cleanly diagnostic outcome. It also uniquely raised "subtraction-shaped noise" as the most worrying alternative: the fitting process can absorb correlated noise into the best-fit waveform, leaving behind a residual that looks signal-like because it was sculpted by subtraction. GLM's supporting tests included the null stream, injection campaigns with known waveform systematics, environmental coherence checks (magnetometers, seismometers, Schumann resonances), and catalog-wide scaling of residuals with source parameters.</p>
           </div>
-          <div class="answer-col theo">
-            <div class="answer-label theo">Theo Collaborator</div>
-            <p class="answer-text">Noise model is unvalidated below 20 Hz — exactly where non-Gaussian detector artifacts dominate. Posteriors in that band shouldn't be trusted until it's addressed.</p>
-            <span class="capability-tag">Caught an unvalidated regime</span>
+          <div class="model-col">
+            <div class="model-label">Kimi</div>
+            <p class="model-text">Kimi treated missing waveform physics and correlated noise as roughly co-equal front-runners and led with triangulation using a third detector as the single strongest next test to break the astrophysical-versus-noise ambiguity. It then proposed off-source time-shifted data, known noise-line catalog checks, waveform-physics recovery, and only then a targeted new-physics hypothesis test.</p>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="problem-box">
-        <div class="card-top">
-          <div>
-            <div class="problem-tag">Jet tagging · equivariant architectures</div>
-            <p class="problem-title">Equivariant network for jet tagging at the LHC</p>
+          <div class="model-col">
+            <div class="model-label">GPT</div>
+            <p class="model-text">GPT framed the next test as detector-consistency and time-shift null trials: build residuals per detector, apply relative time shifts larger than light-travel time, and see whether coherence persists. If it survives time slides, that points to correlated noise or systematics; if it vanishes, that favors an astrophysical origin. GPT then proposed re-fitting with alternative waveform degrees of freedom, and uniquely suggested computing a coherent detection statistic for the residual and comparing it to the time-slide null distribution to formalize significance.</p>
           </div>
         </div>
-        <p class="problem-statement">Is rotational equivariance enough for a jet-tagging architecture?</p>
-      </div>
-      <button class="reveal-btn" data-target="r4">Reveal Theo's response</button>
-      <div class="reveal-panel" id="r4">
-        <div class="compare">
-          <div class="answer-col generic">
-            <div class="answer-label generic">A typical answer</div>
-            <p class="answer-text">Rotational equivariance is a strong inductive bias and should improve tagging performance.</p>
-          </div>
-          <div class="answer-col theo">
-            <div class="answer-label theo">Theo Collaborator</div>
-            <p class="answer-text">Permutation equivariance over jet constituents is unaddressed. Results may depend on arbitrary constituent ordering, which would undermine the reported performance gains.</p>
-            <span class="capability-tag">Caught a missing symmetry</span>
-          </div>
+        <div class="synthesis">
+          <div class="synthesis-label">Council Synthesis</div>
+          <p class="synthesis-text">All three models agreed that new physics is the least likely explanation for a coherent, frequency-tracking residual in two detectors. They all converged on missing waveform physics as the leading mundane hypothesis, noting that standard BBH waveform approximations (quadrupole-only templates, neglected higher-order modes, precession, eccentricity, imperfect merger-ringdown fits) naturally produce deterministic, orbit-following residuals. They also all acknowledged correlated noise as a possibility that coherence alone cannot rule out.</p>
+          <p class="synthesis-text">In short, all three agreed the residual is almost certainly mundane, but they differed on the optimal next diagnostic. GLM prioritized the cheapest physics-targeted test (waveform upgrade), Kimi prioritized geometric confirmation or rejection (third detector), and GPT prioritized a formal null-test framework (time slides plus coherent statistics). A robust follow-up would likely sequence all three: waveform upgrade first, then time-slide nulls and third-detector checks.</p>
         </div>
       </div>
     </div>
@@ -420,9 +440,9 @@
   </div>
 
   <div class="cta">
-    <h3>Want Theo to read your draft before your reviewers do?</h3>
+    <h3>Want Council Mode on your draft before your reviewers see it?</h3>
     <p>Theo Collaborator is in early beta. Join the waitlist for access.</p>
-    <a href="#" class="cta-btn">Join the beta waitlist</a>
+    <a href="https://firstprinciples.com/theo-collaborator---get-early-access" class="cta-btn">Join the beta waitlist</a>
   </div>
 
   <footer>
