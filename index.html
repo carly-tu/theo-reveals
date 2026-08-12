@@ -88,7 +88,7 @@
   }
 
   /* ---------- CARDS ---------- */
-  .cards{ padding-bottom:40px; }
+  .cards{ padding-top:56px; padding-bottom:40px; }
   .card{
     background:var(--bg);
     border:1px solid var(--accent-line);
@@ -132,6 +132,25 @@
     color:var(--text);
     margin:0;
     max-width:66ch;
+  }
+  .why-it-works{
+    font-size:14px;
+    line-height:1.6;
+    color:var(--muted);
+    margin:12px 0 0;
+    max-width:66ch;
+    font-style:italic;
+  }
+
+  /* ---------- COUNCIL INTRO (shared-agreement + divergence line) ---------- */
+  .council-intro{
+    margin-bottom:16px;
+  }
+  .council-intro p{
+    font-size:14.5px;
+    line-height:1.65;
+    color:var(--text);
+    margin:0 0 12px;
   }
 
   /* ---------- COUNCIL GRID (3 model columns) ---------- */
@@ -260,6 +279,28 @@
   .reveal-panel{ display:none; margin-top:4px; }
   .card.revealed .reveal-panel{ display:block; }
 
+  .close-btn{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.03em;
+    text-transform:uppercase;
+    color:var(--muted);
+    background:none;
+    border:none;
+    padding:14px 2px 0;
+    cursor:pointer;
+    margin-top:6px;
+  }
+  .close-btn:hover{ color:var(--text); }
+  .close-btn:focus-visible{ outline:2px solid var(--highlight); outline-offset:2px; }
+  .close-btn svg{
+    width:12px; height:12px;
+    transition:transform 0.15s ease;
+  }
+
   /* ---------- CTA ---------- */
   .cta{
     margin:56px 0 80px;
@@ -327,11 +368,10 @@
 
   <div class="hero">
     <div class="eyebrow">FirstPrinciples · Theo Collaborator — Council Mode</div>
-    <h1 class="headline">One problem, <em>3</em> models.</h1>
+    <h1 class="headline">One problem, one council mode, <em>3</em> models.</h1>
     <p class="sub">Council mode runs on FirstPrinciples' domain-specialized fine-tuned models (GLM, Kimi) and GPT against the same research question, synthesizes where they agree, and where the disagreement is the real signal.</p>
   </div>
 
-  <div class="section-title">Three problems, one Council Mode</div>
 
   <div class="cards">
 
@@ -347,6 +387,10 @@
       </div>
       <button class="reveal-btn" data-target="r1">Reveal Council Mode</button>
       <div class="reveal-panel" id="r1">
+        <div class="council-intro">
+          <p>All three models agreed on the fundamental verdict: convincing-looking 512³ fields are not sufficient proof of learned physics. They all noted that neural operators are discretization-invariant by construction, so generating higher-resolution output is architecturally trivial; the real question is whether the small-scale physics beyond the training Nyquist frequency is correct. All three warned that turbulence is particularly deceptive because plausible-looking structure can hide spectral and statistical errors, and all three converged on checking energy spectra, physical invariants/conservation laws, and higher-order statistics/intermittency (structure functions, velocity-gradient PDFs) rather than trusting visual plausibility.</p>
+          <p>Where they diverged was in what they treated as the strongest or first diagnostic:</p>
+        </div>
         <div class="council-grid">
           <div class="model-col">
             <div class="model-label">GLM</div>
@@ -363,9 +407,9 @@
         </div>
         <div class="synthesis">
           <div class="synthesis-label">Council Synthesis</div>
-          <p class="synthesis-text">All three models agreed on the fundamental verdict: convincing-looking 512³ fields are not sufficient proof of learned physics. They all noted that neural operators are discretization-invariant by construction, so generating higher-resolution output is architecturally trivial; the real question is whether the small-scale physics beyond the training Nyquist frequency is correct. All three warned that turbulence is particularly deceptive because plausible-looking structure can hide spectral and statistical errors, and all three converged on checking energy spectra, physical invariants/conservation laws, and higher-order statistics/intermittency (structure functions, velocity-gradient PDFs) rather than trusting visual plausibility.</p>
           <p class="synthesis-text">In short, the Council agreed the burden of proof lies on statistical and dynamical validation, not appearance, but offered complementary angles: GLM on spectral fidelity and baseline comparison, Kimi on temporal stability and downsampling commutativity, and GPT on invariant preservation, Fourier error structure, and training ablations. A complete validation would ideally combine all three angles.</p>
         </div>
+        <button class="close-btn" data-target="r1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>Close</button>
       </div>
     </div>
 
@@ -381,10 +425,14 @@
       </div>
       <button class="reveal-btn" data-target="r2">Reveal Council Mode</button>
       <div class="reveal-panel" id="r2">
+        <div class="council-intro">
+          <p>All three models agreed that a single accurate prediction is suggestive but not decisive. They all identified the same core danger: the model has likely learned the simulator’s effective theory or inductive biases rather than transferable underlying physics, with the experiment happening to fall inside the simulator’s validity envelope. All three converged on stress-testing the model outside that envelope (failure regimes, perturbed conditions, different experimental setups) as the way to tell.</p>
+          <p>Where they diverged was in emphasis and specific diagnostics:</p>
+        </div>
         <div class="council-grid">
           <div class="model-col">
             <div class="model-label">GLM</div>
-            <p class="model-text">GLM uniquely cast the risk as learning a shared low-order effective theory between simulator and experiment, noting this is harder to detect than overfitting because the model is not wrong within the regime. It alone proposed checking whether the model's errors correlate with the simulator's errors, probing symmetry invariances that the simulator may not enforce, and testing transfer across simulator families (e.g., hydrodynamic to kinetic).</p>
+            <p class="model-text">GLM uniquely cast the risk as learning a shared low-order effective theory between simulator and experiment, noting this is harder to detect than overfitting because the model is not wrong within the regime. It alone proposed checking whether the model’s errors correlate with the simulator’s errors, probing symmetry invariances that the simulator may not enforce, and testing transfer across simulator families (e.g., hydrodynamic to kinetic).</p>
           </div>
           <div class="model-col">
             <div class="model-label">Kimi</div>
@@ -397,9 +445,9 @@
         </div>
         <div class="synthesis">
           <div class="synthesis-label">Council Synthesis</div>
-          <p class="synthesis-text">All three models agreed that a single accurate prediction is suggestive but not decisive. They all identified the same core danger: the model has likely learned the simulator's effective theory or inductive biases rather than transferable underlying physics, with the experiment happening to fall inside the simulator's validity envelope. All three converged on stress-testing the model outside that envelope (failure regimes, perturbed conditions, different experimental setups) as the way to tell.</p>
           <p class="synthesis-text">In short, the Council was unanimous on the caution but offered complementary stress tests: GLM on cross-simulator and symmetry diagnostics, Kimi on causality and observable granularity, and GPT on ablation and calibration.</p>
         </div>
+        <button class="close-btn" data-target="r2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>Close</button>
       </div>
     </div>
 
@@ -415,6 +463,10 @@
       </div>
       <button class="reveal-btn" data-target="r3">Reveal Council Mode</button>
       <div class="reveal-panel" id="r3">
+        <div class="council-intro">
+          <p>All three models agreed that new physics is the least likely explanation for a coherent, frequency-tracking residual in two detectors. They all converged on missing waveform physics as the leading mundane hypothesis, noting that standard BBH waveform approximations (quadrupole-only templates, neglected higher-order modes, precession, eccentricity, imperfect merger-ringdown fits) naturally produce deterministic, orbit-following residuals. They also all acknowledged correlated noise as a possibility that coherence alone cannot rule out.</p>
+          <p>Where they diverged was in what to run next and how they framed the hierarchy:</p>
+        </div>
         <div class="council-grid">
           <div class="model-col">
             <div class="model-label">GLM</div>
@@ -431,9 +483,9 @@
         </div>
         <div class="synthesis">
           <div class="synthesis-label">Council Synthesis</div>
-          <p class="synthesis-text">All three models agreed that new physics is the least likely explanation for a coherent, frequency-tracking residual in two detectors. They all converged on missing waveform physics as the leading mundane hypothesis, noting that standard BBH waveform approximations (quadrupole-only templates, neglected higher-order modes, precession, eccentricity, imperfect merger-ringdown fits) naturally produce deterministic, orbit-following residuals. They also all acknowledged correlated noise as a possibility that coherence alone cannot rule out.</p>
           <p class="synthesis-text">In short, all three agreed the residual is almost certainly mundane, but they differed on the optimal next diagnostic. GLM prioritized the cheapest physics-targeted test (waveform upgrade), Kimi prioritized geometric confirmation or rejection (third detector), and GPT prioritized a formal null-test framework (time slides plus coherent statistics). A robust follow-up would likely sequence all three: waveform upgrade first, then time-slide nulls and third-detector checks.</p>
         </div>
+        <button class="close-btn" data-target="r3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>Close</button>
       </div>
     </div>
 
@@ -457,6 +509,13 @@
     btn.addEventListener('click', ()=>{
       const card = btn.closest('.card');
       card.classList.add('revealed');
+    });
+  });
+  document.querySelectorAll('.close-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const card = btn.closest('.card');
+      card.classList.remove('revealed');
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 </script>
